@@ -1,0 +1,79 @@
+{
+  "id": "2311999",
+  "name": "internship",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "毕设图标管理",
+  "glyphs": [
+    {
+      "icon_id": "1514742",
+      "name": "工资",
+      "font_class": "gongzi",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "4777562",
+      "name": "工资",
+      "font_class": "gongzi1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "1918124",
+      "name": "通知",
+      "font_class": "tongzhi",
+      "unicode": "e6b3",
+      "unicode_decimal": 59059
+    },
+    {
+      "icon_id": "5940384",
+      "name": "通知",
+      "font_class": "tongzhi1",
+      "unicode": "e783",
+      "unicode_decimal": 59267
+    },
+    {
+      "icon_id": "6648586",
+      "name": "通知",
+      "font_class": "tongzhi2",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "13761517",
+      "name": "信息 短信 私信 对话",
+      "font_class": "xinxiduanxinsixinduihua",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "5448614",
+      "name": "实习-A",
+      "font_class": "shixi-A",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "4347512",
+      "name": "icon_任务进程",
+      "font_class": "icon_renwujincheng",
+      "unicode": "eb88",
+      "unicode_decimal": 60296
+    },
+    {
+      "icon_id": "5961300",
+      "name": "待办事项",
+      "font_class": "daibanshixiang",
+      "unicode": "ec4e",
+      "unicode_decimal": 60494
+    },
+    {
+      "icon_id": "14303335",
+      "name": "分配角色",
+      "font_class": "fenpeijiaose",
+      "unicode": "e749",
+      "unicode_decimal": 59209
+    }
+  ]
+}
