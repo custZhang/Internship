@@ -49,7 +49,7 @@
             <el-col :span="4">
               <span>{{plateGroupCardTitle}}</span>
             </el-col>
-            <el-col :span="3" style="float: right" >
+            <el-col :span="4" style="float: right" >
               <span class="mr20" style="color: #409EFF" @click="handleGetData('I')">实习数据</span>
               <span style="color: #409EFF" @click="handleGetData('P')">论文数据</span>
             </el-col>

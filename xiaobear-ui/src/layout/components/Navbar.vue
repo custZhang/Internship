@@ -8,20 +8,24 @@
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <xiao-bear-git id="internship-git" class="right-menu-item hover-effect" />
+<!--        <el-tooltip content="源码地址" effect="dark" placement="bottom">-->
+<!--          <xiao-bear-git id="internship-git" class="right-menu-item hover-effect" />-->
+<!--        </el-tooltip>-->
+
+<!--        <el-tooltip content="文档地址" effect="dark" placement="bottom">-->
+<!--          <xiao-bear-doc id="internship-doc" class="right-menu-item hover-effect" />-->
+<!--        </el-tooltip>-->
+
+        <el-tooltip content="全屏模式" effect="dark" placement="bottom">
+          <screenfull id="screenfull" class="right-menu-item hover-effect" />
         </el-tooltip>
 
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <xiao-bear-doc id="internship-doc" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <!--消息-->
         <el-tooltip disabled>
           <internship-message id="internship-message"></internship-message>
         </el-tooltip>
+
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />

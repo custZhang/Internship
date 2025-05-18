@@ -31,8 +31,8 @@
       <el-col class="mb20">
         <el-card class="box-card" shadow="never">
           <i class="el-icon-close pull-right" @click="cancel"></i>
-          <h3 style="text-align: center;color: #ff4949">{{this.queryParams.companyName}}实习进度</h3>
-          <el-steps :active="active" align-center >
+          <h3 style="text-align: center;color: #ff4949">{{ this.queryParams.companyName }}实习进度</h3>
+          <el-steps :active="active" align-center>
             <el-step title="实习申请" icon="el-icon-edit"></el-step>
             <el-step title="待学院审核" icon="el-icon-s-check"></el-step>
             <el-step title="审核已通过" icon="el-icon-s-check"></el-step>
@@ -53,7 +53,8 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -63,7 +64,8 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -73,7 +75,8 @@
           size="mini"
           :disabled="single"
           @click="handleDetails"
-        >详情</el-button>
+        >详情
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -83,7 +86,8 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -92,22 +96,25 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="practiceList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="实习单位" align="center" prop="companyName" />
-      <el-table-column label="实习岗位" align="center" prop="practicePost" />
-      <el-table-column label="学校指导老师" align="center" prop="schoolInstructor" />
-      <el-table-column label="实习指导老师" align="center" prop="internInstructor" />
-      <el-table-column label="实习指导老师电话" align="center" prop="internPhone" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="实习单位" align="center" prop="companyName"/>
+      <el-table-column label="实习岗位" align="center" prop="practicePost"/>
+      <el-table-column label="学校指导老师" align="center" prop="schoolInstructor"/>
+      <el-table-column label="实习指导老师" align="center" prop="internInstructor"/>
+      <el-table-column label="实习指导老师电话" align="center" prop="internPhone"/>
       <el-table-column label="审核状态" align="center" prop="status" :formatter="statusFormatter"/>
       <el-table-column label="实习状态" align="center" prop="practiceStatus">
-     <template slot-scope="scope">
-       <el-tag :type="formatTagType(scope.row.practiceStatus)" size="small">{{selectDictLabel(practiceStatusOption, scope.row.practiceStatus)}}</el-tag>
-     </template>
+        <template slot-scope="scope">
+          <el-tag :type="formatTagType(scope.row.practiceStatus)" size="small">
+            {{ selectDictLabel(practiceStatusOption, scope.row.practiceStatus) }}
+          </el-tag>
+        </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -116,7 +123,8 @@
             type="text"
             icon="el-icon-d-arrow-right"
             @click="handleStep(scope.row)"
-          >进度</el-button>
+          >进度
+          </el-button>
           <el-button
             size="mini"
             type="text"
@@ -124,7 +132,8 @@
             icon="el-icon-finished"
             @click="handleEnd(scope.row)"
             v-if="scope.row.practiceStatus == 2 ? false : true"
-          >结束实习</el-button>
+          >结束实习
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -138,10 +147,11 @@
     />
 
     <!-- 添加或修改实习信息对话框 -->
-    <el-dialog :title="title" :visible.sync="showApplicationForm"  width="800px" append-to-body>
+    <el-dialog :title="title" :visible.sync="showApplicationForm" width="800px" append-to-body>
       <el-form :span="4" ref="form" :model="form" :rules="rules" label-width="150px" inline>
         <el-form-item label="实习单位" prop="companyId">
-          <el-select v-model="form.companyId" clearable allow-create filterable placeholder="请选择实习单位" style="width: 560px">
+          <el-select v-model="form.companyId" clearable allow-create filterable placeholder="请选择实习单位"
+                     style="width: 560px">
             <el-option
               v-for="o in companyInfoList"
               :key="o.companyId"
@@ -150,14 +160,24 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="实习类型" prop="practiceType">
+          <el-select v-model="form.practiceType" placeholder="请选择实习类型" clearable size="mini" style="width: 200px">
+            <el-option
+              v-for="dict in practiceTypeOption"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="实习岗位" prop="practicePost">
-          <el-input v-model="form.practicePost" placeholder="请输入实习岗位" style="width: 200px" />
+          <el-input v-model="form.practicePost" placeholder="请输入实习岗位" style="width: 200px"/>
         </el-form-item>
         <el-form-item label="家长姓名" prop="parentName">
           <el-input v-model="form.parentName" placeholder="请输入家长姓名" style="width: 200px"/>
         </el-form-item>
         <el-form-item label="家长联系方式" prop="parentPhone">
-          <el-input v-model="form.parentPhone" placeholder="请输入家长联系方式" style="width: 200px" />
+          <el-input v-model="form.parentPhone" placeholder="请输入家长联系方式" style="width: 200px"/>
         </el-form-item>
         <el-form-item label="学校指导老师" prop="schoolInstructor">
           <el-autocomplete
@@ -167,16 +187,16 @@
             style="width: 200px"
             @select="handleSelect"
           ></el-autocomplete>
-<!--          <el-input v-model="form.schoolInstructor" placeholder="请输入学校指导老师" style="width: 200px" />-->
+          <!--          <el-input v-model="form.schoolInstructor" placeholder="请输入学校指导老师" style="width: 200px" />-->
         </el-form-item>
         <el-form-item label="实习指导老师" prop="internInstructor">
-          <el-input v-model="form.internInstructor" placeholder="请输入实习指导老师" style="width: 200px" />
+          <el-input v-model="form.internInstructor" placeholder="请输入实习指导老师" style="width: 200px"/>
         </el-form-item>
         <el-form-item label="实习指导老师电话" prop="internPhone">
-          <el-input v-model="form.internPhone" placeholder="请输入实习指导老师电话" style="width: 200px" />
+          <el-input v-model="form.internPhone" placeholder="请输入实习指导老师电话" style="width: 200px"/>
         </el-form-item>
         <el-form-item label="实习指导老师email" prop="internEmail">
-          <el-input v-model="form.internEmail" placeholder="请输入实习指导老师email" style="width: 200px" />
+          <el-input v-model="form.internEmail" placeholder="请输入实习指导老师email" style="width: 200px"/>
         </el-form-item>
         <el-form-item label="实习开始时间" prop="beginTime">
           <el-date-picker clearable size="small" style="width: 200px"
@@ -194,19 +214,9 @@
                           placeholder="选择实习结束时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="实习类型" prop="practiceType">
-          <el-select v-model="form.practiceType" placeholder="请选择实习类型" clearable mini>
-            <el-option
-              v-for="dict in practiceTypeOption"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="dict.dictValue"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <br>
         <el-form-item label="实习描述" prop="practiceDesc">
-          <el-input type="textarea" v-model="form.practiceDesc" placeholder="请输入实习描述" style="width: 560px" />
+          <el-input type="textarea" v-model="form.practiceDesc" placeholder="请输入实习描述" style="width: 560px"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -216,53 +226,53 @@
     </el-dialog>
 
     <!--详情对话框-->
-    <el-dialog :title="title" :visible.sync="open"  width="1000px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
       <el-card class="box-card" shadow="never" :data="practiceInfo">
         <el-row>
           <el-col :span="6">
-            <el-tag type="success">{{selectDictLabel(practiceTypeOption, practiceInfo.practiceType)}}</el-tag>
+            <el-tag type="success">{{ selectDictLabel(practiceTypeOption, practiceInfo.practiceType) }}</el-tag>
           </el-col>
         </el-row>
         <el-row class="mt20">
           <el-col :span="10">
             <span class="text-color">实习时间：</span>
-            <span>{{practiceInfo.beginTime}}至{{practiceInfo.endTime}}</span>
+            <span>{{ practiceInfo.beginTime }}至{{ practiceInfo.endTime }}</span>
           </el-col>
           <el-col :span="8">
             <span class="text-color">实习单位：</span>
-            <span >{{practiceInfo.companyName}}</span>
+            <span>{{ practiceInfo.companyName }}</span>
           </el-col>
           <el-col :span="6">
             <span class="text-color">实习岗位：</span>
-            <span >{{practiceInfo.practicePost}}</span>
+            <span>{{ practiceInfo.practicePost }}</span>
           </el-col>
         </el-row>
         <el-row class="mt20">
           <el-col :span="10">
             <span class="text-color">实习指导老师：</span>
-            <span>{{practiceInfo.internInstructor}}</span>
+            <span>{{ practiceInfo.internInstructor }}</span>
           </el-col>
           <el-col :span="8">
             <span class="text-color">实习老师联系方式：</span>
-            <span>{{practiceInfo.internPhone}}</span>
+            <span>{{ practiceInfo.internPhone }}</span>
           </el-col>
           <el-col :span="6">
             <span class="text-color">实习老师Email：</span>
-            <span>{{practiceInfo.internEmail}}</span>
+            <span>{{ practiceInfo.internEmail }}</span>
           </el-col>
         </el-row>
         <el-row class="mt20">
           <el-col :span="10">
             <span class="text-color">学校指导老师：</span>
-            <span>{{practiceInfo.schoolInstructor}}</span>
+            <span>{{ practiceInfo.schoolInstructor }}</span>
           </el-col>
           <el-col :span="8">
             <span class="text-color">家长姓名：</span>
-            <span>{{practiceInfo.parentName}}</span>
+            <span>{{ practiceInfo.parentName }}</span>
           </el-col>
           <el-col :span="6">
             <span class="text-color">家长联系方式：</span>
-            <span>{{practiceInfo.parentPhone}}</span>
+            <span>{{ practiceInfo.parentPhone }}</span>
           </el-col>
         </el-row>
       </el-card>
@@ -312,10 +322,10 @@ export default {
       // 公司列表
       companyInfoList: [],
       //字典管理
-      statusOption:[],
+      statusOption: [],
       reviewStatusOption: [],
-      practiceStatusOption:[],
-      practiceTypeOption:[],
+      practiceStatusOption: [],
+      practiceTypeOption: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -344,44 +354,44 @@ export default {
       // 表单校验
       rules: {
         userId: [
-          { required: false, message: "姓名不能为空", trigger: "blur" }
+          {required: false, message: "姓名不能为空", trigger: "blur"}
         ],
         companyName: [
-          { required: true, message: "实习单位不能为空", trigger: "blur" }
+          {required: true, message: "实习单位不能为空", trigger: "blur"}
         ],
         schoolInstructor: [
-          { required: true, message: "学校指导老师不能为空", trigger: "blur" }
+          {required: true, message: "学校指导老师不能为空", trigger: "blur"}
         ],
         internInstructor: [
-          { required: true, message: "实习指导老师不能为空", trigger: "blur" }
+          {required: true, message: "实习指导老师不能为空", trigger: "blur"}
         ],
         internPhone: [
           {
-            required:true,
+            required: true,
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
             message: "请输入正确的手机号码",
             trigger: "blur"
           }
         ],
-        parentName:[
-          { required: true, message: "家长姓名不能为空", trigger: "blur" }
+        parentName: [
+          {required: true, message: "家长姓名不能为空", trigger: "blur"}
         ],
-        practicePost:[
-          { required: true, message: "实习岗位不能为空", trigger: "blur" }
+        practicePost: [
+          {required: true, message: "实习岗位不能为空", trigger: "blur"}
         ],
-        practiceType:[
-          { required: true, message: "实习类型不能为空", trigger: "blur" }
+        practiceType: [
+          {required: true, message: "实习类型不能为空", trigger: "blur"}
         ],
         parentPhone: [
           {
-            required:true,
+            required: true,
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
             message: "请输入正确的手机号码",
             trigger: "blur"
           }
         ],
         beginTime: [
-          { required: true, message: "实习开始时间不能为空", trigger: "blur" }
+          {required: true, message: "实习开始时间不能为空", trigger: "blur"}
         ],
       }
     };
@@ -440,14 +450,14 @@ export default {
       console.log(item);
     },
     /** 查询学院老师列表 */
-    getCollageTeaList(){
+    getCollageTeaList() {
       getUserProfile().then(response => {
         this.user = response.data;
         const deptId = this.user.deptId;
-        console.log("部门ID为：",deptId)
+        console.log("部门ID为：", deptId)
         const roleId = '2';
-        listUser({deptId,roleId}).then(response => {
-          response.rows.forEach((item, index) =>{
+        listUser({deptId, roleId}).then(response => {
+          response.rows.forEach((item, index) => {
             this.restaurants.push({
               value: item.nickName
             })
@@ -458,8 +468,8 @@ export default {
     //tag标签获取类型
     formatTagType(status) {
       if (status == '0') return 'info'
-      else if (status == '1' ) return 'warning'
-      else if (status == '2' ) return 'success'
+      else if (status == '1') return 'warning'
+      else if (status == '2') return 'success'
     },
     // 取消按钮
     cancel() {
@@ -495,42 +505,42 @@ export default {
     },
     //字典翻译
     /** 审核状态 */
-    statusFormatter(row, column){
+    statusFormatter(row, column) {
       return this.selectDictLabel(this.statusOption, row.status);
     },
     /** 实习状态 */
-    practiceStatusFormatter(row, column){
+    practiceStatusFormatter(row, column) {
       return this.selectDictLabel(this.practiceStatusOption, row.practiceStatus);
     },
     /** 审批进度 */
-    handleStep(row){
+    handleStep(row) {
       this.active = 1;
       const practiceId = row.practiceId || this.ids
       getPractice(practiceId).then(response => {
         this.form = response.data;
         this.showStep = true;
-        if (this.form.status == 1){
+        if (this.form.status == 1) {
           this.active = 4;
         }
-        if (this.form.status == 1 && this.form.practiceStatus == 2){
+        if (this.form.status == 1 && this.form.practiceStatus == 2) {
           this.active = 5;
         }
         this.queryParams.companyName = this.form.companyName;
       });
     },
     /** 结束实习按钮 */
-    handleEnd(row){
+    handleEnd(row) {
       this.reset();
       console.log(row.practiceStatus)
       const practiceId = row.practiceId || this.ids
       getPractice(practiceId).then(response => {
         this.form = response.data;
-        if (this.form.practiceStatus != 2 && this.form.status == 1){
+        if (this.form.practiceStatus != 2 && this.form.status == 1) {
           this.$confirm('确定结束该习单位吗', "警告", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning"
-          }).then(() =>{
+          }).then(() => {
             this.form.practiceStatus = 2;
             updatePractice(this.form).then(response => {
               this.msgSuccess("恭喜你，实习结束");
@@ -548,11 +558,11 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.practiceId)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 详情按钮 */
-    handleDetails(row){
+    handleDetails(row) {
       const practiceId = row.practiceId || this.ids
       getPractice(practiceId).then(response => {
         this.practiceInfo = response.data;
@@ -571,18 +581,18 @@ export default {
       })
       personalListPractice({practiceStatus}).then(response => {
         this.practiceList = response.rows;
-        if (this.practiceList.length > 0){
+        if (this.practiceList.length > 0) {
           this.$confirm('存在正在实习的单位，若确定新增，待你提交后，将结束你原实习单位', "警告", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning"
-          }).then(() =>{
+          }).then(() => {
             this.getCompanyList();
             this.title = '实习申请表';
             this.showApplicationForm = true;
             this.getList();
           })
-        }else {
+        } else {
           this.getCompanyList();
           this.showApplicationForm = true;
           this.showStep = false;
@@ -596,9 +606,9 @@ export default {
       getPractice(practiceId).then(response => {
         this.form = response.data;
         /** 审核通过后不可以修改 */
-        if (this.form.status == 1){
+        if (this.form.status == 1) {
           this.msgInfo("你的实习申请已审核，不能进行修改！");
-        }else {
+        } else {
           this.getCompanyList();
           this.showApplicationForm = true;
         }
@@ -610,7 +620,7 @@ export default {
         if (valid) {
           if (this.form.practiceId != null) {
             /** 审核通过后不可以修改 */
-            if (this.form.status == 1){
+            if (this.form.status == 1) {
               this.msgInfo("你的实习申请已审核，不能进行修改！");
             } else {
               updatePractice(this.form).then(response => {
@@ -620,7 +630,7 @@ export default {
               });
             }
           } else {
-            if (!this.handleIsNumber(this.form.companyId)){
+            if (!this.handleIsNumber(this.form.companyId)) {
               this.form.companyName = this.form.companyId;
               this.form.companyId = null
             }
@@ -635,7 +645,7 @@ export default {
       });
     },
     //判断是否是数字
-    handleIsNumber(obj){
+    handleIsNumber(obj) {
       const numReg = /^[0-9]*$/;
       const numRe = new RegExp(numReg);
       return numRe.test(obj);
@@ -670,7 +680,7 @@ export default {
             }
           });
         }
-      }else {
+      } else {
         getPractice(practiceIds).then(response => {
           this.form = response.data;
           if (this.form.status == 1) {
@@ -698,14 +708,14 @@ export default {
     handleExport() {
       const queryParams = this.queryParams;
       this.$confirm('是否确认导出所有实习信息数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportPractice(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return exportPractice(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };
