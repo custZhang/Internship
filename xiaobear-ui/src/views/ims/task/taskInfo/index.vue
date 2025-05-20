@@ -135,7 +135,7 @@
     <el-dialog :title="title" :visible.sync="open" width="700px"  append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" inline>
         <el-form-item label="任务名称" prop="taskName">
-          <el-input v-model="form.taskName" placeholder="2020年上学期计算机科学与技术学院实习任务" class="input520" />
+          <el-input v-model="form.taskName" placeholder="2025年上学期计算机科学与技术学院实习任务" class="input520" />
         </el-form-item>
         <el-form-item label="院系" prop="deptId">
           <treeselect v-model="form.deptId" :options="deptOptions" :normalizer="normalizer" placeholder="选择院系" class="input520" />

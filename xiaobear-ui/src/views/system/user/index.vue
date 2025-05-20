@@ -6,7 +6,7 @@
         <div class="head-container">
           <el-input
             v-model="deptName"
-            placeholder="请输入部门名称"
+            placeholder="请输入院系/专业名称"
             clearable
             size="small"
             prefix-icon="el-icon-search"

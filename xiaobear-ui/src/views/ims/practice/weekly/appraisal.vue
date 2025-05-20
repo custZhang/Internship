@@ -104,7 +104,11 @@
           <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="审核状态" align="center" prop="status" :formatter="statusFormat"/>
+      <el-table-column label="审核状态" align="center" prop="status" width="100" >
+        <template slot-scope="scope">
+          <el-tag :type="formatTagType(scope.row.status)">{{selectDictLabel(statusOption, scope.row.status)}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -214,6 +218,12 @@ export default {
     // 考核类型 0-实习周记 1-实习总结字典翻译
     assessmenTypeFormat(row, column) {
       return this.selectDictLabel(this.assessmenTypeOptions, row.assessmenType);
+    },
+    //tag标签获取类型
+    formatTagType(status) {
+      if (status == 0) return ''
+      else if (status == 1 ) return 'success'
+      else if (status == 2 ) return 'danger'
     },
     statusFormat(row, column){
       return this.selectDictLabel(this.statusOption, row.status);

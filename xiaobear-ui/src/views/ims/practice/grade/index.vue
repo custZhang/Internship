@@ -87,7 +87,11 @@
       <el-table-column label="教师意见" align="center" prop="teaOpinion" />
       <el-table-column label="实习小组意见" align="center" prop="groupOpinion" />
       <el-table-column label="学院意见" align="center" prop="deptOpinion" />
-      <el-table-column label="审核状态" align="center" prop="status" :formatter="statusFormatter"/>
+      <el-table-column label="审核状态" align="center" prop="status" width="100" >
+        <template slot-scope="scope">
+          <el-tag :type="formatTagType(scope.row.status)">{{selectDictLabel(statusOptions, scope.row.status)}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" v-if="false" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -235,6 +239,12 @@ export default {
         this.practiceList = response.rows;
         console.log(response.rows)
       });
+    },
+    //tag标签获取类型
+    formatTagType(status) {
+      if (status == 0) return ''
+      else if (status == 1 ) return 'success'
+      else if (status == 2 ) return 'danger'
     },
     // 取消按钮
     cancel() {

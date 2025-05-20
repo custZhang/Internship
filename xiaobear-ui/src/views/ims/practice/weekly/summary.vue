@@ -43,7 +43,8 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -53,7 +54,8 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -63,7 +65,8 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -73,7 +76,8 @@
           size="mini"
           :disabled="single"
           @click="handleDetail"
-        >详情</el-button>
+        >详情
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -82,16 +86,17 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
-	  <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="weeklyList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="实习单位" align="center" prop="companyName" />
-      <el-table-column label="考核类型" align="center" prop="assessmenType" :formatter="assessmenTypeFormat" />
-      <el-table-column label="标题" align="center" prop="weeklyTitle" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="实习单位" align="center" prop="companyName"/>
+      <el-table-column label="考核类型" align="center" prop="assessmenType" :formatter="assessmenTypeFormat"/>
+      <el-table-column label="标题" align="center" prop="weeklyTitle"/>
       <el-table-column label="开始时间" align="center" prop="beginTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d}') }}</span>
@@ -102,8 +107,12 @@
           <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="审核状态" align="center" prop="status" :formatter="statusFormat"/>
-      <el-table-column label="提交状态" align="center" prop="published" width="100"  :formatter="isPublishedFormat">
+      <el-table-column label="审核状态" align="center" prop="status" width="100">
+        <template slot-scope="scope">
+          <el-tag :type="formatTagType(scope.row.status)">{{ selectDictLabel(statusOption, scope.row.status) }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="提交状态" align="center" prop="published" width="100" :formatter="isPublishedFormat">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.published"
@@ -120,20 +129,23 @@
             type="text"
             icon="el-icon-view"
             @click="handleDetail(scope.row)"
-          >查看</el-button>
+          >查看
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             style="color: #F56C6C"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -149,13 +161,13 @@
 </template>
 
 <script>
-import { listWeekly, getWeekly, delWeekly, addWeekly, updateWeekly, exportWeekly } from "@/api/ims/practice/weekly";
+import {listWeekly, getWeekly, delWeekly, addWeekly, updateWeekly, exportWeekly} from "@/api/ims/practice/weekly";
 import Editor from '@/components/Editor';
 import {getUserProfile} from "../../../../api/system/user";
 
 export default {
   name: "Weekly",
-  components: { Editor },
+  components: {Editor},
   data() {
     return {
       // 遮罩层
@@ -169,7 +181,7 @@ export default {
       // 显示搜索条件
       showSearch: true,
       //周次
-      week:"第",
+      week: "第",
       // 总条数
       total: 0,
       // 实习考核信息表格数据
@@ -181,7 +193,7 @@ export default {
       // 考核类型 0-实习周记 1-实习总结字典
       assessmenTypeOptions: [],
       //审核
-      statusOption:[],
+      statusOption: [],
       //提交状态
       isPublishedOptions: [],
       // 查询参数
@@ -203,8 +215,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -228,23 +239,29 @@ export default {
       this.queryParams.assessmenType = 1;
       getUserProfile().then(response => {
         if (response.data.roleId == '100') {
-            this.queryParams.userId = response.data.userId;
+          this.queryParams.userId = response.data.userId;
         }
         listWeekly(this.queryParams).then(response => {
-            this.weeklyList = response.rows;
-            this.total = response.total;
-            this.loading = false;
+          this.weeklyList = response.rows;
+          this.total = response.total;
+          this.loading = false;
         });
       })
     },
-    isPublishedFormat(row, column){
+    //tag标签获取类型
+    formatTagType(status) {
+      if (status == 0) return ''
+      else if (status == 1 ) return 'success'
+      else if (status == 2 ) return 'danger'
+    },
+    isPublishedFormat(row, column) {
       return this.selectDictLabel(this.isPublishedOptions, row.published);
     },
     // 考核类型 0-实习周记 1-实习总结字典翻译
     assessmenTypeFormat(row, column) {
       return this.selectDictLabel(this.assessmenTypeOptions, row.assessmenType);
     },
-    statusFormat(row, column){
+    statusFormat(row, column) {
       return this.selectDictLabel(this.statusOption, row.status);
     },
     // 取消按钮
@@ -288,20 +305,20 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.weeklyId)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     // 提交状态修改
     handleStatusChange(row) {
       //已经提交并且审核通过了
-      if (row.status == 1 && row.published == 0){
+      if (row.status == 1 && row.published == 0) {
         this.$confirm('你的总结已经审核通过，无法进行更改！', "提交", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         })
         this.getList();
-      }else {
+      } else {
         const weeklyId = row.weeklyId || this.ids
         console.log(row.published);
         let text = row.published === "0" ? "不提交" : "提交";
@@ -309,14 +326,14 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
-        }).then(function() {
+        }).then(function () {
           getWeekly(weeklyId).then(response => {
             response.data.published = row.published;
             updateWeekly(response.data);
           });
         }).then(() => {
           this.msgSuccess(text + "成功");
-        }).catch(function() {
+        }).catch(function () {
           row.published = row.published === "0" ? "1" : "0";
         });
       }
@@ -324,14 +341,14 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.open =true;
+      this.open = true;
       //跳转到具体页面信息
-        this.$router.push({
-          path: '/addWeekly',
-          query:{
-            assessmenType: 1
-          }
-        });
+      this.$router.push({
+        path: '/addWeekly',
+        query: {
+          assessmenType: 1
+        }
+      });
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -340,20 +357,20 @@ export default {
       //跳转到具体页面信息
       this.$router.push({
         path: '/addWeekly',
-        query:{
+        query: {
           assessmenType: 1,
           weeklyId: weeklyId
         }
       });
     },
     /** 详情按钮 */
-    handleDetail(row){
+    handleDetail(row) {
       this.reset();
       const weeklyId = row.weeklyId || this.ids
       //跳转到具体页面信息
       this.$router.push({
         path: '/addWeekly',
-        query:{
+        query: {
           assessmenType: 1,
           weeklyId: weeklyId
         }
@@ -383,28 +400,28 @@ export default {
     handleDelete(row) {
       const weeklyIds = row.weeklyId || this.ids;
       this.$confirm('是否确认删除实习考核信息编号为"' + weeklyIds + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delWeekly(weeklyIds);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delWeekly(weeklyIds);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
       this.$confirm('是否确认导出所有实习考核信息数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportWeekly(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return exportWeekly(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };
